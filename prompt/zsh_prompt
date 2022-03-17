@@ -27,6 +27,8 @@ autoload -U promptinit && promptinit
 
 PROMPT='%B'                          # bold start
 PROMPT+='%F{cyan}'$USER'%f'          # print user
+# PROMPT+='%F{cyan}%m%f'              # print host name
+# PROMPT+="in"
 PROMPT+='%F{magenta} %~% %f > '      # print path
 PROMPT+='%b'                         # bold end
 
