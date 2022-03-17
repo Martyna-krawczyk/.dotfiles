@@ -1,0 +1,50 @@
+#!/bin/bash
+
+# Create a new directory and enter it
+mkd() {
+	mkdir -p "$@"
+	# cd "$@" || exit
+  cd "$@"
+
+}
+
+aws() {
+  case $* in
+  # who am I authed as?
+  auth) command aws sts get-caller-identity ;;
+  # what is the arn I am authed as?
+  who) command aws sts get-caller-identity --query "Arn" --output text ;;
+  # quick auth to ECR.
+  "ecr "*dkr.ecr.*.amazonaws.com*) command aws ecr get-login-password --region ap-southeast-2 | docker login --username AWS --password-stdin "$2" ;;
+  # run default command
+  *) command aws "$@" ;;
+  esac
+}
+
+# git.
+git() {
+  case $* in
+    # show me all the branches by default.
+    branch) command git branch --all ;;
+    # run "default" command.
+    *) command git "$@" ;;
+  esac
+}
+
+# Query Wikipedia via console over DNS
+mwiki() {
+	dig +short txt "$*".wp.dg.cx
+}
+
+# Get colors in manual pages
+man() {
+	env \
+		LESS_TERMCAP_mb="$(printf '\e[1;31m')" \
+		LESS_TERMCAP_md="$(printf '\e[1;31m')" \
+		LESS_TERMCAP_me="$(printf '\e[0m')" \
+		LESS_TERMCAP_se="$(printf '\e[0m')" \
+		LESS_TERMCAP_so="$(printf '\e[1;44;33m')" \
+		LESS_TERMCAP_ue="$(printf '\e[0m')" \
+		LESS_TERMCAP_us="$(printf '\e[1;32m')" \
+		man "$@"
+}

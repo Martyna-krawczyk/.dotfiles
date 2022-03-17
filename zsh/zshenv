@@ -1,0 +1,4 @@
+#!/bin/zsh
+
+# general
+export DOTFILES="$HOME/.dotfiles"

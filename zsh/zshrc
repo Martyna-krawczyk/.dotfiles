@@ -1,0 +1,16 @@
+#!/bin/zsh
+
+# go to folder path without using cd.
+setopt AUTO_CD
+
+# source external files.
+files=(
+  "$DOTFILES/aliases/aliases"
+  "$DOTFILES/prompt/bash_prompt"
+  "$DOTFILES/prompt/zsh_prompt"
+)
+for file in "${files[@]}"; do
+  if [[ -f "$file" ]]; then
+    source "$file"
+  fi
+done

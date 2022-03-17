@@ -1,0 +1,4 @@
+#!/bin/zsh
+
+PROMPT='%F{green}'$USER'%f'
+PROMPT+='%F{purple} %~ % %f > '
