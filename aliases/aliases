@@ -22,12 +22,12 @@ aws() {
 }
 
 # git.
-git() {
+g() {
   case $* in
     "a "*) command git add "$2" ;;
-    c) command git commit -m ;;
+    "c "*) command git commit -m "$2" ;;
     # show me all the branches by default.
-    branch) command git branch --all ;;
+    b) command git branch --all ;;
     # View abbreviated SHA, description, and history graph of the latest 20 commits
     l) command git log --pretty=oneline -n 20 --graph --abbrev-commit ;;
     # View the current working tree status using the short format
