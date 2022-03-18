@@ -8,6 +8,7 @@ files=(
   "$DOTFILES/aliases/aliases"
   "$DOTFILES/prompt/bash_prompt"
   "$DOTFILES/prompt/zsh_prompt"
+  "$DOTFILES/work"
 )
 for file in "${files[@]}"; do
   if [[ -f "$file" ]]; then
