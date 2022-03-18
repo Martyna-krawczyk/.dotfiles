@@ -14,7 +14,7 @@ aws() {
   auth) command aws sts get-caller-identity ;;
   # what is the arn I am authed as?
   who) command aws sts get-caller-identity --query "Arn" --output text ;;
-  # quick auth to ECR.
+  # quick auth to ECR
   "ecr "*dkr.ecr.*.amazonaws.com*) command aws ecr get-login-password --region ap-southeast-2 | docker login --username AWS --password-stdin "$2" ;;
   # run default command
   *) command aws "$@" ;;
@@ -22,17 +22,18 @@ aws() {
 }
 
 # git.
-g() {
+git() {
   case $* in
     "a "*) command git add "$2" ;;
+    # commit message must be double quoted
     "c "*) command git commit -m "$2" ;;
-    # show me all the branches by default.
+    # show me all the branches by default
     b) command git branch --all ;;
     # View abbreviated SHA, description, and history graph of the latest 20 commits
     l) command git log --pretty=oneline -n 20 --graph --abbrev-commit ;;
     # View the current working tree status using the short format
 	  s) command git status -s ;;
-    # run "default" command.
+    # run "default" command
     *) command git "$@" ;;
   esac
 }
