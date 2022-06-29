@@ -21,20 +21,14 @@ aws() {
   esac
 }
 
-# git.
-git() {
+kubectl() {
   case $* in
-    "a "*) command git add "$2" ;;
-    # commit message must be double quoted
-    "c "*) command git commit -m "$2" ;;
-    # show me all the branches by default
-    b) command git branch --all ;;
-    # View abbreviated SHA, description, and history graph of the latest 20 commits
-    l) command git log --pretty=oneline -n 20 --graph --abbrev-commit ;;
-    # View the current working tree status using the short format
-	  s) command git status -s ;;
-    # run "default" command
-    *) command git "$@" ;;
+  # get Prometheus links
+  gl) kubectl get svc -n platform-enablement -l provided-by=jupiter -o=custom-columns=Service:.metadata.name,Endpoint:.spec.externalName ;;
+  # print deployment 
+  dd) kubectl describe deployment ;;
+  # run default command
+  *) command kubectl "$@" ;;
   esac
 }
 

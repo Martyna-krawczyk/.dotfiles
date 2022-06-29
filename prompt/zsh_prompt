@@ -17,19 +17,22 @@ setopt PATH_DIRS          # Perform a path search even on command names with sla
 autoload -U colors        # The usual alias expansion during reading will be suppressed if the autoload builtin or its equivalent is given the option -U. This is recommended for the use of functions supplied with the zsh distribution.
 colors                    # red, blue, green, cyan, yellow, magenta, black, & white
 
+# https://zsh.sourceforge.io/Doc/Release/User-Contributions.html#Version-Control-Information
+
 autoload -Uz vcs_info
-zstyle ':vcs_info:*' enable git hg fossil
-zstyle ':vcs_info:*' actionformats '%F{5}(%f%s%F{5})%F{3}-%F{5}[%F{2}%b%F{3}|%F{1}%a%F{5}]%f '
-zstyle ':vcs_info:*' formats '%F{5}(%f%s%F{5})%F{3}-%F{5}[%F{2}%b%F{5}]%f '
-zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b%F{1}:%F{3}%r'
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:*' actionformats '%F{5}(%f%s%F{5})%F{3}-%F{5}[%F{2}%b%F{3}|%F{1}%a%F{5}]%f '          # special action going on in your current repository; like an interactive rebase or a merge conflict.
+zstyle ':vcs_info:*' formats '%F{5}(%f%s%F{5})%F{3}-%F{5}[%F{2}%b%F{5}]%f '                             # A list of formats, used when actionformats is not used (which is most of the time).
+
+precmd() {
+    vcs_info
+}
 
 autoload -U promptinit && promptinit
 
 PROMPT='%B'                          # bold start
 PROMPT+='%F{cyan}'$USER'%f'          # print user
-# PROMPT+='%F{cyan}%m%f'              # print host name
-# PROMPT+="in"
-PROMPT+='%F{magenta} %~% %f > '      # print path
-PROMPT+='%b'                         # bold end
-
-# PROMPT='%F{cyan}'$USER'%f''%F{magenta} %~ %f > '
+PROMPT+='%F{magenta} %~% %f '        # print path
+PROMPT+='${vcs_info_msg_0_}'         # print git info
+PROMPT+='%{$fg[blue]% > '            # end prompt
+PROMPT+='%b'                         # bold end                       

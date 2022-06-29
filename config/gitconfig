@@ -1,0 +1,25 @@
+[user]
+	name = Martyna Krawczyk
+	email = martynakraw@gmail.com
+[init]
+	defaultBranch = master
+
+[alias]
+	b = branch
+	br = for-each-ref --sort='-authordate' --format=' %(color:green)%(authordate:relative)%09%(color:white)%(refname:short)' 'refs/remotes' # Branch ages
+	c = commit
+	co = checkout
+	diff = diff --word-diff
+	difff = diff --name-only
+	l = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short --graph # Log of current branch
+	lf = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat # Log with files
+	ls = ls-files
+	sl = stash list
+	s = status --short
+[color]
+	ui = true
+[color "status"]
+	added = yellow
+	changed = green
+	untracked = cyan
+	# https://git-scm.com/docs/git-config

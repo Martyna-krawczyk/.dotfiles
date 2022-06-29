@@ -23,3 +23,14 @@ for file in "${files[@]}"; do
       || die "failed to create symlink from $src to $dest"
   fi
 done
+
+# setup .gitconfig.
+# TODO-check if .gitconfig already exists and if it does, delete it
+if ! [[ -d "$HOME/.gitconfig" ]]; then
+  ln -s "$HOME/.dotfiles/config/gitconfig" "$PWD/.gitconfig" \
+    || die "failed to create symlink for .gitconfig"
+fi
+
+# install tools
+# brew, tree kubectl docker jq
+# ansible
