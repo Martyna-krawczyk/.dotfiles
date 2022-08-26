@@ -2,3 +2,4 @@
 
 # general
 export DOTFILES="$HOME/.dotfiles"
+export CDPATH=$HOME/src/github.com/MYOB-Technology

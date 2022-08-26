@@ -5,7 +5,6 @@ mkd() {
 	mkdir -p "$@"
 	# cd "$@" || exit
   cd "$@"
-
 }
 
 aws() {

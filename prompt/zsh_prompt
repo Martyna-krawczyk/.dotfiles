@@ -3,6 +3,7 @@
 # TODO set history path
 
 # options
+setopt AUTO_CD
 setopt PROMPT_SUBST       # bash compatibility. If the PROMPT_SUBST option is set, the prompt string is first subjected to parameter expansion, command substitution and arithmetic expansion
 setopt NO_BEEP
 
@@ -34,5 +35,6 @@ PROMPT='%B'                          # bold start
 PROMPT+='%F{cyan}'$USER'%f'          # print user
 PROMPT+='%F{magenta} %~% %f '        # print path
 PROMPT+='${vcs_info_msg_0_}'         # print git info
-PROMPT+='%{$fg[blue]% > '            # end prompt
+PROMPT+='
+%{$fg[blue]% > '                     # end prompt new line
 PROMPT+='%b'                         # bold end                       
