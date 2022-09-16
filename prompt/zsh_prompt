@@ -35,6 +35,5 @@ PROMPT='%B'                          # bold start
 PROMPT+='%F{cyan}'$USER'%f'          # print user
 PROMPT+='%F{magenta} %~% %f '        # print path
 PROMPT+='${vcs_info_msg_0_}'         # print git info
-PROMPT+='
-%{$fg[blue]% > '                     # end prompt new line
-PROMPT+='%b'                         # bold end                       
+PROMPT+='%{$fg[blue]% 
+> %b'                                # end prompt new line                      
