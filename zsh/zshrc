@@ -6,7 +6,6 @@ setopt AUTO_CD
 # source external files.
 files=(
   "$DOTFILES/aliases/aliases"
-  "$DOTFILES/prompt/bash_prompt"
   "$DOTFILES/prompt/zsh_prompt"
   "$DOTFILES/work"
 )
