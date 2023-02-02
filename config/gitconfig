@@ -8,6 +8,17 @@
 [init]
 	defaultBranch = master
 
+[color]
+  branch = auto
+  diff = auto
+  interactive = auto
+  status = auto
+  ui = auto
+
+[color "branch"]
+  current = green
+  remote = yellow
+
 [alias]
 	b = branch
 	br = for-each-ref --sort='-authordate' --format=' %(color:green)%(authordate:relative)%09%(color:white)%(refname:short)' 'refs/remotes' # Branch ages
@@ -15,15 +26,15 @@
 	co = checkout
 	diff = diff --word-diff
 	difff = diff --name-only
-	l = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short --graph --all# Log of current branch
+	l = log --graph --all --pretty=format:'%Cred%h%Creset - %s %Cgreen(%cr) %C(bold blue)%an%Creset %C(yellow)%d%Creset'# Log of current branch
 	lf = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat # Log with files
 	ls = ls-files
 	sl = stash list
 	s = status --short
-[color]
-	ui = true
-[color "status"]
-	added = yellow
-	changed = green
-	untracked = cyan
-	# https://git-scm.com/docs/git-config
+	
+	# Get default branch name (copied from https://stackoverflow.com/a/67672350/14870317)
+  	defaultBranch = !git symbolic-ref refs/remotes/origin/HEAD | cut -d'/' -f4
+	
+	# Checkout to defaultBranch
+  	com = !git checkout $(git defaultBranch)
+	

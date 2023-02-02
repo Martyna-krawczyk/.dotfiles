@@ -3,7 +3,6 @@
 # Create a new directory and enter it
 mkd() {
 	mkdir -p "$@"
-	# cd "$@" || exit
   cd "$@"
 }
 
@@ -20,12 +19,13 @@ aws() {
   esac
 }
 
-kubectl() {
+kc() {
   case $* in
+  gp) command kubectl get pods ;;
   # get Prometheus links
-  gl) kubectl get svc -n platform-enablement -l provided-by=jupiter -o=custom-columns=Service:.metadata.name,Endpoint:.spec.externalName ;;
+  gl) command kubectl get svc -n platform-enablement -l provided-by=jupiter -o=custom-columns=Service:.metadata.name,Endpoint:.spec.externalName ;;
   # print deployment 
-  dd) kubectl describe deployment ;;
+  dd) command kubectl describe deployment ;;
   # run default command
   *) command kubectl "$@" ;;
   esac
