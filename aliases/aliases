@@ -6,6 +6,14 @@ mkd() {
   cd "$@"
 }
 
+aws-auth() {
+  # print available accounts
+  aws profiles 
+  printf "\nwhich account?\n"
+  read -r profile
+  export AWS_PROFILE="$profile" && echo "authed into $AWS_PROFILE"
+}
+
 aws() {
   case $* in
   # what profiles are available to me?
