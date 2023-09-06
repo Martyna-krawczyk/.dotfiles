@@ -8,6 +8,8 @@ mkd() {
 
 aws() {
   case $* in
+  # what profiles are available to me?
+  profiles) command aws --no-cli-pager configure list-profiles ;;
   # who am I authed as?
   auth) command aws sts get-caller-identity ;;
   # what is the arn I am authed as?

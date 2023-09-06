@@ -31,10 +31,20 @@ precmd() {
 
 autoload -U promptinit && promptinit
 
-# PROMPT='%B%F{cyan}'$USER'%f%F{magenta} %~% %f ${vcs_info_msg_0_}'    #single line
+# add aws sso profile to prompt
+get_aws_profile() {
+    if [[ -z $AWS_PROFILE ]]; then
+        echo -n "🔒"
+    else
+       echo -n "$AWS_PROFILE " 
+    fi
+}
 
-PROMPT='%B'                          # bold start
-PROMPT+='%F{cyan}'$USER'%f'          # print user
-PROMPT+='%F{magenta} %~% %f '        # print path
-PROMPT+='${vcs_info_msg_0_}'         # print git info
-PROMPT+='%F{blue}> %f'               # end prompt                    
+
+# the final printed prompt on the command line
+PROMPT='%B'                             # bold start
+PROMPT+='%F{cyan}'$USER'%f'             # print user
+PROMPT+='%F{magenta} %~% %f '           # print path
+PROMPT+='%F{yellow}$(get_aws_profile)'  # get aws authed account
+PROMPT+='${vcs_info_msg_0_}'            # print git info
+PROMPT+='%F{blue}> %f'                  # end prompt                    
