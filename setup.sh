@@ -14,10 +14,12 @@ os=$(uname) \
     || die "$os is not supported, missing implementation"
 
 # check deps.
-dep=("curl" "brew")
-    hash "$dep" 2>/dev/null || missing+=("$dep")
-if [[ ${#missing[@]} -ne 0 ]]; then
-    [[ ${#missing[@]} -gt 1 ]] && { s="s"; }
+deps=("curl" "brew")
+for dep in "${deps[@]}" ; do
+  hash "$dep" 2>/dev/null || missing+=("$dep")  
+  done
+    if [[ ${#missing[@]} -ne 0 ]]; then
+        [[ ${#missing[@]} -gt 1 ]] && { s="s"; }
     die "missing dep${s}: ${missing[*]}"
 fi
 
