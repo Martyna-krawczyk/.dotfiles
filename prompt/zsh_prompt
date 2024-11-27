@@ -35,7 +35,7 @@ autoload -U promptinit && promptinit
 # add aws sso profile to prompt
 get_aws_profile() {
     if [[ -z $AWS_PROFILE ]]; then
-        echo -n "🔒 "
+        echo -n ""
     else
        echo -n "aws-$AWS_PROFILE " 
     fi

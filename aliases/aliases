@@ -6,12 +6,17 @@ mkd() {
   cd "$@"
 }
 
+# open up dotfiles in code
+alias dotfiles='code $DOTFILES'
+
 aws-auth() {
   # print available accounts
   aws profiles 
   printf "\nwhich account?\n"
   read -r profile
+  export AWS_SDK_LOAD_CONFIG=1
   export AWS_PROFILE="$profile" && echo "authed into $AWS_PROFILE"
+  aws sso login
 }
 
 aws() {

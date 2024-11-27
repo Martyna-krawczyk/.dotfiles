@@ -1,19 +1,19 @@
 #!/usr/bin/env bash
 
-# funcs.
+# funcs
 die() { echo "$1" >&2; exit "${2:-1}"; }
 
-# check root.
+# check root
 [[ -d .git ]] \
     || die "$0 must be run from the repository root directory"
 
-# check os.
+# check os
 os=$(uname) \
     || die "failed to get operating system"
 [[ $os == Darwin ]] \
     || die "$os is not supported, missing implementation"
 
-# check deps.
+# check deps
 deps=("curl" "brew")
 for dep in "${deps[@]}" ; do
   hash "$dep" 2>/dev/null || missing+=("$dep")  
@@ -23,7 +23,7 @@ for dep in "${deps[@]}" ; do
     die "missing dep${s}: ${missing[*]}"
 fi
 
-# setup cleanup.
+# setup cleanup
 cleanup() {
   files=("./AWSCLIV2.pkg")
     [[ -f "$file" ]]
@@ -32,13 +32,13 @@ cleanup() {
 }
 trap cleanup SIGTERM SIGINT EXIT
 
-# setup .dotfiles.
+# setup .dotfiles
 if ! [[ -d "$HOME/.dotfiles" ]]; then
   ln -s "$PWD" "$HOME/.dotfiles" \
     || die "failed to create symlink for .dotfiles"
 fi
 
-# setup .zshrc files.
+# setup .zshrc files
 files=("zshenv" "zshrc")
 for file in "${files[@]}"; do
   src="$PWD/zsh/$file"
@@ -57,26 +57,7 @@ if ! [[ -d "$HOME/.gitconfig" ]]; then
     || die "failed to create symlink for .gitconfig"
 fi
 
-# install tools
-# TODO: tree kubectl docker netcat ansible
-
-# install go.
-hash go &>/dev/null || {
-  brew install go \
-    || die "failed to install go"
-}
-
-# install zsh.
-hash zsh &>/dev/null || {
-  brew install zsh \
-    || die "failed to install zsh"
-
-  # switch default shell.
-  chsh -s "$(which zsh)" \
-    || die "failed to change default shell to zsh"
-}
-
-# install aws.
+# install aws
 hash aws &>/dev/null || {
       file="AWSCLIV2.pkg"
       curl -sSLo "$file" "https://awscli.amazonaws.com/AWSCLIV2.pkg" \
@@ -84,20 +65,50 @@ hash aws &>/dev/null || {
       sudo installer -pkg AWSCLIV2.pkg -target / \
         || die "failed to install awscli"
 
-  # set default region.
+  # set default region
   aws configure set region ap-southeast-2 \
     || die "failed to set the default aws region"
 }
 
-# install jq.
-hash jq &>/dev/null || {
-      brew install jq \
-        || die "failed to install jq"
+
+# install visual studio code 
+hash code &>/dev/null || {
+  brew install --cask visual-studio-code \
+    || die "failed to install visual studio code"
 }
 
-# install lolcat
-hash lolcat &>/dev/null || {
-  curl -sSL https://raw.githubusercontent.com/tehmaze/lolcat/master/lolcat > /usr/local/bin/lolcat
-  chmod +x /usr/local/bin/lolcat
+# install brew packages
+brew_packages=(
+  "go" 
+  "zsh" 
+  "jq" 
+  "lolcat" 
+  "pyenv" 
+  "cfn-lint" 
+  "golangci-lint" 
+  "k9s" 
+  "kubernetes-cli" 
+  "make" 
+  "podman" 
+  "yarn" 
+  "dive"
+)
+
+for package in "${brew_packages[@]}"; do
+  install_brew_package "$package"
+done
+
+# function to install brew packages
+install_brew_package() {
+  local package=$1
+  hash "$package" &>/dev/null || {
+    brew install "$package" \
+      || die "failed to install $package"
+  }
 }
 
+# switch default shell to zsh if installed
+if hash zsh &>/dev/null; then
+  chsh -s "$(which zsh)" \
+    || die "failed to change default shell to zsh"
+fi
